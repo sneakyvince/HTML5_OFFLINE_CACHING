@@ -4,10 +4,19 @@
    Author's custom styles
    ========================================================================== */
 
+.container {
+    max-width: 960px;
+}
 
+.jumbotron {
+    background-image: url("../img/stedentrip-rome.jpg");
+    background-position: center;
+}
 
-
-
+.jumbotron h1, .jumbotron p {
+    color: white;
+    text-align: right;
+}
 
 
 
