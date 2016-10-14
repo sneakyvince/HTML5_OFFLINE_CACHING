@@ -1,13 +1,20 @@
 <?php
 //local
-//$dbconn = mysqli_connect("localhost", "cityguide", "1234", "cityguide") or die("Databaseconnectie is kneiterhard gefaald!");
+$dbconn = mysqli_connect("localhost", "cityguide", "1234", "cityguide") or die("Databaseconnectie is kneiterhard gefaald!");
 
 //iris
-$dbconn = mysqli_connect("studmysql01.fhict.local", "dbi342465", "ww", "dbi342465") or die("Databaseconnectie is kneiterhard gefaald!");
+//$dbconn = mysqli_connect("studmysql01.fhict.local", "dbi342465", "ww", "dbi342465") or die("Databaseconnectie is kneiterhard gefaald!");
+
+
+//Controleert of er iets is ingevoerd:
+
+
+//Zo ja, dan wordt het ingevoerde in $city gezet.
 if (isset($_GET['city'])) {
     $city = ucfirst($_GET['city']);
 }
 
+//Zo nee, dan wordt de stad Rome.
 else {
     $city = "Rome";
 }
@@ -79,9 +86,11 @@ else {
       <div class="row">
           <?php
 
+          //Selecteert alle bezienswaardigheden van de stad in de variabele.
           $sql = "SELECT * FROM sights WHERE sightcity = '" . $city . "'";
       	$result = mysqli_query($dbconn, $sql);
 
+        //Hier wordt voor elke bezienswaardigheid een klein overzicht met informatie ge-echo'd.
       	while($row = mysqli_fetch_assoc($result)){
             echo '<div class="col-md-16">
               <div class="col-md-10">
@@ -93,6 +102,7 @@ else {
               <img src="img/' . $row['sightimg'] . '">
               </div></div>';
 
+             //Om het uitklapbare venster mogelijk te maken, wordt er inline een script gemaakt voor elke bezienswaardigheid.
              echo '<script>
               var colstate' . $row['sightid'] . ' = "small";
                 function expand(x) {
