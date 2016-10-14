@@ -1,12 +1,27 @@
+<?php
+//local
+//$dbconn = mysqli_connect("localhost", "cityguide", "1234", "cityguide") or die("Databaseconnectie is kneiterhard gefaald!");
+
+//iris
+$dbconn = mysqli_connect("studmysql01.fhict.local", "dbi342465", "ww", "dbi342465") or die("Databaseconnectie is kneiterhard gefaald!");
+if (isset($_GET['city'])) {
+    $city = ucfirst($_GET['city']);
+}
+
+else {
+    $city = "Rome";
+}
+?>
+
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="" manifest="cityguide.php"> <!--<![endif]-->
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title></title>
+        <title>Cityguide</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -39,14 +54,12 @@
           <a class="navbar-brand" href="#">City Guide</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right" role="form">
+          <form class="navbar-form navbar-right" role="form" action="cities.php" method="GET">
             <div class="form-group">
-              <input type="text" placeholder="Email" class="form-control">
+              <input type="text" placeholder="Search" name="city" class="form-control">
             </div>
-            <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control">
-            </div>
-            <button type="submit" class="btn btn-success">Sign in</button>
+            <!--<button type="submit" class="btn btn-success">Submit</button>-->
+            <input type="submit" class="btn btn-success" value="Submit">
           </form>
         </div><!--/.navbar-collapse -->
       </div>
@@ -55,8 +68,8 @@
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
       <div class="container">
-        <h1>Rome</h1>
-        <p>Dit is een overzicht van alle bezienswaardigheden in Rome!</p>
+        <h1><?php echo $city; ?></h1>
+        <p>Dit is een overzicht van alle bezienswaardigheden in <?php echo $city; ?>!</p>
         <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
       </div>
     </div>
@@ -64,7 +77,41 @@
     <div class="container">
       <!-- Example row of columns -->
       <div class="row">
-        <div class="col-md-16">
+          <?php
+
+          $sql = "SELECT * FROM sights WHERE sightcity = '" . $city . "'";
+      	$result = mysqli_query($dbconn, $sql);
+
+      	while($row = mysqli_fetch_assoc($result)){
+            echo '<div class="col-md-16">
+              <div class="col-md-10">
+              <h2>' . $row['sightname'] . '</h2>
+              <div class="collapse-desc" id="sightdesc' . $row['sightid'] . '"><p>' . $row['sightdesc'] . '</p></div>
+              <p><a class="btn btn-default" onclick="expand(' . $row['sightid'] . ');" id="viewbutton' . $row['sightid'] . '" role="button">View more</a></p>
+              </div>
+              <div class="col-md-2">
+              <img src="img/' . $row['sightimg'] . '">
+              </div></div>';
+
+             echo '<script>
+              var colstate' . $row['sightid'] . ' = "small";
+                function expand(x) {
+                    if (colstate' . $row['sightid'] . ' == "small") {
+                        document.getElementById("sightdesc" + x).style.height="auto";
+                        colstate' . $row['sightid'] . ' = "big";
+                        document.getElementById("viewbutton" + x).innerHTML="View less";
+                    }
+                    else if (colstate' . $row['sightid'] . ' == "big") {
+                        document.getElementById("sightdesc" + x).style.height="100px";
+                        colstate' . $row['sightid'] . ' = "small";
+                        document.getElementById("viewbutton" + x).innerHTML="View more";
+                    }
+                }
+              </script>';
+      	}
+
+          ?>
+        <!--<div class="col-md-16">
           <div class="col-md-10">
           <h2>Colosseum</h2>
           <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
@@ -73,53 +120,24 @@
           <div class="col-md-2">
           <img src="img/colosseum-palatine-hill.jpg">
           </div>
+      </div>
+
+      <div class="col-md-16">
+        <div class="col-md-10">
+        <h2>Colosseum</h2>
+        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+        <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
         </div>
-        <div class="col-md-16">
-          <div class="col-md-10">
-          <h2>Pantheon (Rome)</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-          </div>
-          <div class="col-md-2">
-          <img src="img/20150906-164825-largejpg.jpg">
-          </div>          
-       </div>
-        <div class="col-md-16">
-          <div class="col-md-10">
-          <h2>Arcibasilica di San Giovanni in Laterano</h2>
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-          </div>
-          <div class="col-md-2">
-          <img src="img/inside-the-basilica.jpg">
-          </div>
-        </div>
-        <div class="col-md-16">
-          <div class="col-md-10">
-          <h2>Basilica di Santa Maria Maggiore</h2>
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-          </div>
-          <div class="col-md-2">
-          <img src="img/walls-inside.jpg">
-          </div>
-        </div>
-        <div class="col-md-16">
-          <div class="col-md-10">
-          <h2>Centro Storico</h2>
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-          </div>
-          <div class="col-md-2">
-          <img src="img/centro-storico.jpg">
-          </div>
-        </div>
+        <div class="col-md-2">
+        <img src="img/colosseum-palatine-hill.jpg">
+    </div>-->
+    </div>
       </div>
 
       <hr>
 
       <footer>
-        <p>&copy; Company 2015</p>
+        <p style="padding-left:5px"><!--&copy;--> Vincent van der Palen, Arne Reijntjes</p>
       </footer>
     </div> <!-- /container -->        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
