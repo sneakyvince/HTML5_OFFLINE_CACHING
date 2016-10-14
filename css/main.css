@@ -1,8 +1,39 @@
+div.well{
+  height: 250px;
+} 
 
+.Absolute-Center {
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+}
+
+.Absolute-Center.is-Responsive {
+  width: 50%; 
+  height: 50%;
+  min-width: 200px;
+  max-width: 400px;
+  padding: 40px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 25px;
+}
+
+#logo-container{
+  text-align: center;
+  margin: auto;
+  margin-bottom: 10px;
+  font-size: 3em;
+  color: white;
+  font-weight: 300;
+  
+}
 
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
+.background {
+    background-image: url("../img/stedentrip-rome.jpg");
+}
 
 .container {
     max-width: 960px;
