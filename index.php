@@ -32,8 +32,8 @@
 				<div class="col-sm-12 col-md-10 col-md-offset-1">
 					<form action="cities.php" method="GET" id="loginForm">
 						<div class="form-group input-group">
-							<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-							<input class="form-control" type="text" name="city" placeholder="Zoek naar een stad" />
+							<span class="input-group-addon"></span>
+							<input class="form-control" type="text" name="city" placeholder="Zoek naar een stad" required/>
 						</div>
 						<div class="form-group">
 							<input type="submit" value="Zoek!" class="btn btn-def btn-block">

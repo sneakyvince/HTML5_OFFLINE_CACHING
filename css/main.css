@@ -31,21 +31,24 @@ div.well{
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
+body {
+    padding-top: 0px;
+}
 .background {
     background-image: url("../img/stedentrip-rome.jpg");
 }
 
 .container {
-    max-width: 960px;
+    max-width: 960px !important;
 }
 
 .jumbotron {
     background-image: url("../img/stedentrip-rome.jpg");
     background-position: center;
+    padding-top: 98px;
 }
 
 .jumbotron h1, .jumbotron p {
-    color: white;
     text-align: right;
 }
 
@@ -63,4 +66,18 @@ img {
     text-overflow: ellipsis;
     overflow-y: hidden;
     transition: 1s !important;
+}
+
+h1 span, p span {
+    background-color: white
+}
+
+.navbar-inverse {
+    background: none;
+    background-color: rgba(0, 0, 0, 0.7) !important;
+    border: none;
+}
+
+.navbar-brand {
+    color: white !important;
 }
