@@ -107,12 +107,12 @@ else {
               var colstate' . $row['sightid'] . ' = "small";
                 function expand(x) {
                     if (colstate' . $row['sightid'] . ' == "small") {
-                        document.getElementById("sightdesc" + x).style.height="auto";
+                        document.getElementById("sightdesc" + x).style.maxHeight="10000px";
                         colstate' . $row['sightid'] . ' = "big";
                         document.getElementById("viewbutton" + x).innerHTML="View less";
                     }
                     else if (colstate' . $row['sightid'] . ' == "big") {
-                        document.getElementById("sightdesc" + x).style.height="100px";
+                        document.getElementById("sightdesc" + x).style.maxHeight="100px";
                         colstate' . $row['sightid'] . ' = "small";
                         document.getElementById("viewbutton" + x).innerHTML="View more";
                     }
